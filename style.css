@@ -1,0 +1,439 @@
+:root {
+    --bg-color: #050505;
+    --text-color: #f0f0f0;
+    --accent-cyan: #00f3ff;
+    --accent-purple: #bd00ff;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-heading: 'Space Mono', monospace;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(189, 0, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.05) 0%, transparent 40%);
+}
+
+.app-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 2rem;
+    position: relative;
+    text-align: center;
+}
+
+/* Typography */
+h1 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -2px;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    color: var(--accent-cyan);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+h3 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--accent-purple);
+    margin-bottom: 0.5rem;
+}
+
+p {
+    line-height: 1.6;
+    color: #ccc;
+}
+
+.accent {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    opacity: 0.8;
+}
+
+/* Common Classes */
+.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.primary-btn {
+    background: transparent;
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    letter-spacing: 2px;
+}
+
+.primary-btn:hover {
+    background: rgba(0, 243, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+}
+
+.secondary-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.8rem 2rem;
+    margin-top: 2rem;
+}
+
+.secondary-btn:hover {
+    border-color: var(--text-color);
+    color: var(--text-color);
+}
+
+/* Form Styles */
+.input-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 3rem;
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+}
+
+.form-group {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    color: var(--accent-purple);
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-color);
+    padding: 1rem 0;
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-bottom-color: var(--accent-cyan);
+}
+
+/* Sequencing Screen */
+.sequencing-screen {
+    position: relative;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#dna-canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.status-log {
+    z-index: 2;
+    margin-top: 250px;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    color: var(--accent-cyan);
+}
+
+.log-entry {
+    opacity: 0;
+    animation: typeIn 0.5s forwards;
+}
+
+@keyframes typeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Result Screen */
+.result-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 3rem;
+    border-radius: 4px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.genome-id {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.fortune-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.fortune-module {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 4px;
+    text-align: left;
+    border-left: 2px solid var(--accent-purple);
+}
+
+.full-width {
+    grid-column: span 2;
+    border-left: 2px solid var(--accent-cyan);
+}
+
+.donation-area {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+.donate-btn {
+    background: var(--accent-cyan);
+    color: #000;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+.donate-btn:hover {
+    background: #fff;
+    box-shadow: 0 0 20px var(--accent-cyan);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .fortune-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .input-card,
+    .result-card {
+        padding: 1.5rem;
+    }
+}
+
+/* File Upload Styling */
+.file-upload-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+}
+
+.file-upload-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-custom {
+    display: block;
+    background: rgba(0, 243, 255, 0.1);
+    border: 1px dashed var(--accent-cyan);
+    padding: 1rem;
+    color: var(--accent-cyan);
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    text-align: center;
+    transition: all 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-upload-wrapper:hover .file-custom {
+    background: rgba(0, 243, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+}
+
+/* Riddle Module */
+.riddle-module {
+    border-left: 2px solid #fff !important;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.riddle-module h3 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#riddle-result {
+    font-style: italic;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* Responsive Grid Update */
+@media (min-width: 600px) {
+    .fortune-module:nth-last-child(2) {
+        /* Prophecy */
+        grid-column: span 1;
+    }
+
+    .fortune-module:nth-last-child(1) {
+        /* Riddle */
+        grid-column: span 2;
+    }
+}
+
+/* Fortune Stick Module */
+.cylinder-container {
+    width: 120px;
+    height: 200px;
+    margin: 3rem auto;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.cylinder {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sticks {
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background: repeating-linear-gradient(90deg,
+            rgba(189, 0, 255, 0.5),
+            rgba(189, 0, 255, 0.5) 5px,
+            transparent 5px,
+            transparent 10px);
+}
+
+.shake-anim {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) infinite both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-2px, 0, 0) rotate(-1deg);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(4px, 0, 0) rotate(2deg);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-8px, 0, 0) rotate(-4deg);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(8px, 0, 0) rotate(4deg);
+    }
+}
+
+.stick-module {
+    border-left: 2px solid var(--accent-cyan) !important;
+    background: rgba(0, 243, 255, 0.05) !important;
+    margin-top: 1.5rem;
+}
+
+.riddle-text {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    /* Keeps paragraph formatting */
+    text-align: left;
+    color: #e0e0e0;
+}

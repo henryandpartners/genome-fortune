@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genome Fortune | Decode Your Destiny</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Hero Section -->
+        <header class="hero" id="hero-section">
+            <div class="logo">GENOME <span class="accent">FORTUNE</span></div>
+            <h1>Initialize Your<br>Bio-Destiny Sequence</h1>
+            <p class="subtitle">Merging Ancient Cosmology with Epigenetic Algorithms</p>
+            <button id="start-btn" class="primary-btn">Begin Sequencing</button>
+            <button id="stick-mode-btn" class="secondary-btn" style="margin-top: 1rem;">Fortune Stick Protocol</button>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-screen hidden" id="input-section">
+            <div class="input-card">
+                <h2>Subject Data Entry</h2>
+                <form id="bio-form">
+                    <div class="form-group">
+                        <label for="subject-name">Subject Name</label>
+                        <input type="text" id="subject-name" required placeholder="e.g. Homo Sapien X"
+                            autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="birth-date">Incarnation Date</label>
+                        <input type="date" id="birth-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birth-time">Incarnation Time</label>
+                        <input type="time" id="birth-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="palm-image">Palm Topography Scan</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="palm-image" accept="image/*">
+                            <span class="file-custom" id="file-label">Upload Bio-Image data...</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-btn">Run Analysis</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Fortune Stick Section -->
+        <section class="result-screen hidden" id="fortune-stick-section">
+            <div class="input-card">
+                <h1>Fortune Protocol</h1>
+                <p class="subtitle">Focus on your query. Shake the vessel.</p>
+
+                <div class="cylinder-container" id="cylinder-container">
+                    <div class="cylinder">
+                        <div class="sticks"></div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="shake-btn" class="primary-btn">Initiate Shake</button>
+                    <button id="back-to-input-btn" class="secondary-btn">Return</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading / Sequencing Section -->
+        <section class="sequencing-screen hidden" id="sequencing-section">
+            <div class="sequence-display">
+                <canvas id="dna-canvas"></canvas>
+                <div class="status-log" id="status-log">
+                    <div class="log-entry">Initializing connection...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section class="result-screen hidden" id="result-section">
+            <div class="result-card">
+                <div class="genome-id" id="genome-id">REF: 000-000</div>
+                <h2>Sequence Decoded</h2>
+
+                <div class="fortune-grid">
+                    <div class="fortune-module">
+                        <h3>Genomic Numerology</h3>
+                        <p id="numerology-result">Analyzing...</p>
+                    </div>
+                    <div class="fortune-module">
+                        <h3>Cosmic Epigenetics</h3>
+                        <p id="astrology-result">Analyzing...</p>
+                    </div>
+                    <div class="fortune-module">
+                        <h3>Palm Topography</h3>
+                        <p id="palm-result">Scanning...</p>
+                    </div>
+                    <div class="fortune-module full-width">
+                        <h3>The Prophecy</h3>
+                        <p id="main-fortune">Analyzing...</p>
+                    </div>
+                    <div class="fortune-module full-width riddle-module">
+                        <h3>The Final Riddle</h3>
+                        <p id="riddle-result">Analyzing...</p>
+                    </div>
+                    <!-- Fortune Stick Result (Display Logic Handled in JS) -->
+                    <div id="stick-result-container" class="fortune-module full-width stick-module hidden">
+                        <h3>Fortune Stick #<span id="stick-number">--</span></h3>
+                        <div id="stick-riddle" class="riddle-text"></div>
+                    </div>
+                    <!-- Fortune Stick Result (Only shows if played) -->
+                    <div id="stick-result-container" class="fortune-module full-width stick-module hidden">
+                        <h3>Fortune Stick #<span id="stick-number">--</span></h3>
+                        <div id="stick-riddle" class="riddle-text"></div>
+                    </div>
+                </div>
+
+                <div class="donation-area">
+                    <p>Prophecies strictly require energy exchange.</p>
+                    <button class="donate-btn" onclick="window.open('https://ko-fi.com', '_blank')">Synthesize
+                        Donation</button>
+                </div>
+
+                <button id="reset-btn" class="secondary-btn">New Subject</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="oracle.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
