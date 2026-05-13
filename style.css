@@ -433,7 +433,123 @@ input:focus {
     font-size: 0.95rem;
     line-height: 1.7;
     white-space: pre-wrap;
-    /* Keeps paragraph formatting */
     text-align: left;
     color: #e0e0e0;
+}
+
+/* ===== Culture Modules ===== */
+.section-divider {
+    grid-column: span 2;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+    letter-spacing: 3px;
+    text-align: center;
+    margin: 1rem 0 0.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0.5rem;
+    opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+    .section-divider {
+        grid-column: span 1;
+    }
+}
+
+.culture-result {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #ccc;
+    white-space: pre-wrap;
+}
+
+.mono-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+    word-break: break-all;
+    letter-spacing: 1px;
+}
+
+/* ===== Share Area ===== */
+.share-area {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    text-align: center;
+}
+
+.share-area p {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: var(--accent-purple);
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.share-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
+}
+
+/* ===== Scrollable Result Card ===== */
+.result-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 3rem;
+    border-radius: 4px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar */
+.result-card::-webkit-scrollbar {
+    width: 4px;
+}
+
+.result-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.result-card::-webkit-scrollbar-thumb {
+    background: var(--accent-purple);
+    border-radius: 2px;
+}
+
+/* Fortune grid for culture modules */
+.fortune-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+    .fortune-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
 }

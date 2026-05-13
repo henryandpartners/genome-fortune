@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Genome Fortune | Decode Your Destiny</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div class="app-container">
         <!-- Hero Section -->
@@ -31,8 +27,7 @@
                 <form id="bio-form">
                     <div class="form-group">
                         <label for="subject-name">Subject Name</label>
-                        <input type="text" id="subject-name" required placeholder="e.g. Homo Sapien X"
-                            autocomplete="off">
+                        <input type="text" id="subject-name" required placeholder="e.g. Homo Sapien X" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="birth-date">Incarnation Date</label>
@@ -59,13 +54,11 @@
             <div class="input-card">
                 <h1>Fortune Protocol</h1>
                 <p class="subtitle">Focus on your query. Shake the vessel.</p>
-
                 <div class="cylinder-container" id="cylinder-container">
                     <div class="cylinder">
                         <div class="sticks"></div>
                     </div>
                 </div>
-
                 <div class="controls">
                     <button id="shake-btn" class="primary-btn">Initiate Shake</button>
                     <button id="back-to-input-btn" class="secondary-btn">Return</button>
@@ -90,51 +83,122 @@
                 <h2>Sequence Decoded</h2>
 
                 <div class="fortune-grid">
-                    <div class="fortune-module">
-                        <h3>Genomic Numerology</h3>
-                        <p id="numerology-result">Analyzing...</p>
-                    </div>
-                    <div class="fortune-module">
-                        <h3>Cosmic Epigenetics</h3>
-                        <p id="astrology-result">Analyzing...</p>
-                    </div>
-                    <div class="fortune-module">
-                        <h3>Palm Topography</h3>
-                        <p id="palm-result">Scanning...</p>
-                    </div>
+                    <!-- DNA Sequence -->
                     <div class="fortune-module full-width">
-                        <h3>The Prophecy</h3>
-                        <p id="main-fortune">Analyzing...</p>
+                        <h3>🧬 Genomic Sequence</h3>
+                        <p id="dna-sequence" class="mono-text">—</p>
                     </div>
+
+                    <!-- The Prophecy (Synthesized) -->
+                    <div class="fortune-module full-width">
+                        <h3>🔮 The Prophecy</h3>
+                        <p id="main-fortune">—</p>
+                    </div>
+
+                    <!-- The Final Riddle -->
                     <div class="fortune-module full-width riddle-module">
-                        <h3>The Final Riddle</h3>
-                        <p id="riddle-result">Analyzing...</p>
+                        <h3>🧩 The Final Riddle</h3>
+                        <p id="riddle-result">—</p>
                     </div>
-                    <!-- Fortune Stick Result (Display Logic Handled in JS) -->
+
+                    <!-- ===== MULTI-CULTURE RESULTS ===== -->
+                    <h3 class="section-divider">— CULTURAL COSMOLOGY ENGINES —</h3>
+
+                    <!-- Chinese Bazi -->
+                    <div class="fortune-module full-width culture-module" id="module-bazi">
+                        <h3>🏯 Bazi — Four Pillars of Destiny</h3>
+                        <div class="culture-result" id="bazi-result">—</div>
+                    </div>
+
+                    <!-- I Ching -->
+                    <div class="fortune-module full-width culture-module" id="module-iching">
+                        <h3>☰ I Ching — Oracle Hexagram</h3>
+                        <div class="culture-result" id="iching-result">—</div>
+                    </div>
+
+                    <!-- Chinese Zodiac -->
+                    <div class="fortune-module culture-module" id="module-chinese-zodiac">
+                        <h3>🐉 Chinese Zodiac</h3>
+                        <div class="culture-result" id="chinese-zodiac-result">—</div>
+                    </div>
+
+                    <!-- Thai Horasat -->
+                    <div class="fortune-module culture-module" id="module-thai-horasat">
+                        <h3>🇹🇭 Thai Horasat</h3>
+                        <div class="culture-result" id="thai-horasat-result">—</div>
+                    </div>
+
+                    <!-- Vedic Astrology -->
+                    <div class="fortune-module full-width culture-module" id="module-vedic">
+                        <h3>🕉️ Vedic Jyotish</h3>
+                        <div class="culture-result" id="vedic-result">—</div>
+                    </div>
+
+                    <!-- Western Astrology -->
+                    <div class="fortune-module culture-module" id="module-western">
+                        <h3>⭐ Western Zodiac</h3>
+                        <div class="culture-result" id="western-result">—</div>
+                    </div>
+
+                    <!-- Aztec Tonalpohualli -->
+                    <div class="fortune-module culture-module" id="module-aztec">
+                        <h3>🌎 Aztec Tonalpohualli</h3>
+                        <div class="culture-result" id="aztec-result">—</div>
+                    </div>
+
+                    <!-- Numerology -->
+                    <div class="fortune-module full-width culture-module" id="module-numerology">
+                        <h3>🔢 Multi-System Numerology</h3>
+                        <div class="culture-result" id="numerology-result">—</div>
+                    </div>
+
+                    <!-- Palm Analysis -->
+                    <div class="fortune-module full-width culture-module" id="module-palm">
+                        <h3>🖐️ Palm Topography Analysis</h3>
+                        <div class="culture-result" id="palm-result">—</div>
+                    </div>
+
+                    <!-- Fortune Stick Result (if played) -->
                     <div id="stick-result-container" class="fortune-module full-width stick-module hidden">
-                        <h3>Fortune Stick #<span id="stick-number">--</span></h3>
+                        <h3>🥢 Fortune Stick #<span id="stick-number">--</span></h3>
                         <div id="stick-riddle" class="riddle-text"></div>
                     </div>
-                    <!-- Fortune Stick Result (Only shows if played) -->
-                    <div id="stick-result-container" class="fortune-module full-width stick-module hidden">
-                        <h3>Fortune Stick #<span id="stick-number">--</span></h3>
-                        <div id="stick-riddle" class="riddle-text"></div>
+                </div>
+
+                <!-- Share Buttons -->
+                <div class="share-area">
+                    <p>Share Your Destiny</p>
+                    <div class="share-buttons">
+                        <button id="share-image-btn" class="share-btn" title="Share as Image">📸 Image</button>
+                        <button id="share-text-btn" class="share-btn" title="Share as Text">📋 Text</button>
+                        <button id="share-twitter-btn" class="share-btn" title="Share on Twitter">🐦 Tweet</button>
                     </div>
                 </div>
 
                 <div class="donation-area">
                     <p>Prophecies strictly require energy exchange.</p>
-                    <button class="donate-btn" onclick="window.open('https://ko-fi.com', '_blank')">Synthesize
-                        Donation</button>
+                    <button class="donate-btn" onclick="window.open('https://ko-fi.com', '_blank')">Synthesize Donation</button>
                 </div>
 
                 <button id="reset-btn" class="secondary-btn">New Subject</button>
             </div>
         </section>
+
+        <!-- Hidden canvas for share card generation -->
+        <canvas id="share-canvas" style="display:none;"></canvas>
     </div>
 
-    <script src="oracle.js"></script>
+    <!-- Engine Imports -->
+    <script src="engines/bazi.js"></script>
+    <script src="engines/iching.js"></script>
+    <script src="engines/thai-horasat.js"></script>
+    <script src="engines/vedic.js"></script>
+    <script src="engines/aztec.js"></script>
+    <script src="engines/western.js"></script>
+    <script src="engines/chinese-zodiac.js"></script>
+    <script src="engines/numerology.js"></script>
+    <script src="engines/palm-analysis.js"></script>
+    <script src="engines/unified-oracle.js"></script>
     <script src="app.js"></script>
 </body>
-
 </html>
