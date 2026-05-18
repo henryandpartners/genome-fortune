@@ -17,6 +17,7 @@
             <h1>Initialize Your<br>Bio-Destiny Sequence</h1>
             <p class="subtitle">Merging Ancient Cosmology with Epigenetic Algorithms</p>
             <button id="start-btn" class="primary-btn">Begin Sequencing</button>
+            <button id="couple-btn" class="secondary-btn" style="margin-top: 1rem;">💞 Couple Genome Match</button>
             <button id="stick-mode-btn" class="secondary-btn" style="margin-top: 1rem;">Fortune Stick Protocol</button>
         </header>
 
@@ -46,6 +47,53 @@
                     </div>
                     <button type="submit" class="primary-btn">Run Analysis</button>
                 </form>
+            </div>
+        </section>
+
+        <!-- Couple Input Section -->
+        <section class="input-screen hidden" id="couple-input-section">
+            <div class="input-card couple-card">
+                <h2>💞 Couple Genome Match</h2>
+                <p class="subtitle">Cross-reference two bio-destiny sequences</p>
+                <form id="couple-form">
+                    <div class="couple-columns">
+                        <div class="couple-column">
+                            <h3>Subject Alpha</h3>
+                            <div class="form-group">
+                                <label for="couple-name1">Name</label>
+                                <input type="text" id="couple-name1" required placeholder="First subject" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="couple-date1">Incarnation Date</label>
+                                <input type="date" id="couple-date1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="couple-time1">Incarnation Time</label>
+                                <input type="time" id="couple-time1" required>
+                            </div>
+                        </div>
+                        <div class="couple-divider">
+                            <span class="dna-helix-icon">🧬</span>
+                        </div>
+                        <div class="couple-column">
+                            <h3>Subject Omega</h3>
+                            <div class="form-group">
+                                <label for="couple-name2">Name</label>
+                                <input type="text" id="couple-name2" required placeholder="Second subject" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="couple-date2">Incarnation Date</label>
+                                <input type="date" id="couple-date2" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="couple-time2">Incarnation Time</label>
+                                <input type="time" id="couple-time2" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-btn couple-match-btn">Run Match Analysis</button>
+                </form>
+                <button id="couple-back-btn" class="secondary-btn">Return</button>
             </div>
         </section>
 
@@ -184,6 +232,67 @@
             </div>
         </section>
 
+        <!-- Couple Result Section -->
+        <section class="result-screen hidden" id="couple-result-section">
+            <div class="result-card couple-result-card">
+                <div class="genome-id" id="couple-genome-id">REF: COUPLE-000-0000</div>
+                <h2>💞 Bio-Destiny Match Analysis</h2>
+
+                <div class="couple-header">
+                    <div class="couple-subject" id="couple-subject1">
+                        <span class="subject-label">Alpha</span>
+                        <span class="subject-name" id="couple-name-display1">—</span>
+                    </div>
+                    <div class="couple-link-icon">🧬</div>
+                    <div class="couple-subject" id="couple-subject2">
+                        <span class="subject-label">Omega</span>
+                        <span class="subject-name" id="couple-name-display2">—</span>
+                    </div>
+                </div>
+
+                <!-- Overall Compatibility -->
+                <div class="compatibility-overview">
+                    <div class="compat-score-ring">
+                        <svg viewBox="0 0 120 120" id="compat-ring-svg">
+                            <circle cx="60" cy="60" r="50" class="ring-bg" />
+                            <circle cx="60" cy="60" r="50" class="ring-progress" id="compat-ring" />
+                        </svg>
+                        <span class="compat-percent" id="compat-percent">0%</span>
+                    </div>
+                    <div class="compat-tier" id="compat-tier">—</div>
+                    <p class="compat-reading" id="compat-reading">—</p>
+                </div>
+
+                <!-- Couple DNA -->
+                <div class="fortune-module full-width">
+                    <h3>🧬 Couple Genome Sequence</h3>
+                    <p id="couple-dna-sequence" class="mono-text">—</p>
+                </div>
+
+                <!-- Relationship Dynamic -->
+                <div class="fortune-module full-width dynamic-module">
+                    <h3 id="dynamic-title">—</h3>
+                    <p id="dynamic-desc">—</p>
+                </div>
+
+                <!-- Dimension Scores -->
+                <h3 class="section-divider">— DIMENSION ANALYSIS —</h3>
+                <div class="dimension-grid" id="dimension-grid">
+                    <!-- Filled by JS -->
+                </div>
+
+                <!-- Share -->
+                <div class="share-area">
+                    <p>Share This Match</p>
+                    <div class="share-buttons">
+                        <button id="couple-share-text-btn" class="share-btn">📋 Text</button>
+                    </div>
+                </div>
+
+                <button id="couple-reset-btn" class="secondary-btn">New Match</button>
+            </div>
+        </section>
+
         <!-- Hidden canvas for share card generation -->
         <canvas id="share-canvas" style="display:none;"></canvas>
     </div>
@@ -198,6 +307,7 @@
     <script src="engines/chinese-zodiac.js"></script>
     <script src="engines/numerology.js"></script>
     <script src="engines/palm-analysis.js"></script>
+    <script src="engines/couple-match.js"></script>
     <script src="engines/unified-oracle.js"></script>
     <script src="app.js"></script>
 </body>
