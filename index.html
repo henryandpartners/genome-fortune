@@ -17,6 +17,7 @@
             <h1>Initialize Your<br>Bio-Destiny Sequence</h1>
             <p class="subtitle">Merging Ancient Cosmology with Epigenetic Algorithms</p>
             <button id="start-btn" class="primary-btn">Begin Sequencing</button>
+            <button id="genome-btn" class="secondary-btn" style="margin-top: 1rem;">🧬 Genomic Data Lab</button>
             <button id="couple-btn" class="secondary-btn" style="margin-top: 1rem;">💞 Couple Genome Match</button>
             <button id="stick-mode-btn" class="secondary-btn" style="margin-top: 1rem;">Fortune Stick Protocol</button>
         </header>
@@ -47,6 +48,55 @@
                     </div>
                     <button type="submit" class="primary-btn">Run Analysis</button>
                 </form>
+            </div>
+        </section>
+
+        <!-- Genomic Data Lab Section -->
+        <section class="input-screen hidden" id="genome-lab-section">
+            <div class="input-card">
+                <h2>🧬 Genomic Data Lab</h2>
+                <p class="subtitle">Input, scan, and regulate genomic sequences</p>
+                <div class="genome-tabs">
+                    <button class="genome-tab active" data-tab="input">📥 Input</button>
+                    <button class="genome-tab" data-tab="scan">🔍 Scan</button>
+                    <button class="genome-tab" data-tab="regulation">📊 Regulation</button>
+                    <button class="genome-tab" data-tab="fortune">🔮 Fortune</button>
+                </div>
+                <!-- Input Tab -->
+                <div class="genome-panel active" id="genome-input-panel">
+                    <textarea id="genome-sequence" placeholder="Paste DNA sequence here (A, T, G, C)...
+
+Example: ATGGCTGTCTCCCACTTCTGGCTTCATCTG" rows="6"></textarea>
+                    <div class="genome-input-info">
+                        <span id="genome-bp-count">0 bp</span>
+                        <span id="genome-gc-content">GC: 0.0%</span>
+                    </div>
+                    <div class="genome-examples">
+                        <span>Examples:</span>
+                        <button class="genome-example-btn" data-example="pigment">🎨 Pigment</button>
+                        <button class="genome-example-btn" data-example="silk">🧵 Silk</button>
+                        <button class="genome-example-btn" data-example="stress">🔥 Stress</button>
+                        <button class="genome-example-btn" data-example="full">🧬 Full</button>
+                    </div>
+                    <button id="genome-scan-btn" class="primary-btn">🔍 Scan for Genes & Regulation</button>
+                </div>
+                <!-- Scan Tab -->
+                <div class="genome-panel" id="genome-scan-panel">
+                    <div id="genome-gene-matches"></div>
+                    <div id="genome-element-matches"></div>
+                    <div id="genome-scan-empty" class="genome-empty"><p>🔍 Scan a sequence to see gene matches</p></div>
+                </div>
+                <!-- Regulation Tab -->
+                <div class="genome-panel" id="genome-regulation-panel">
+                    <div id="genome-regulation-results"></div>
+                    <div id="genome-regulation-empty" class="genome-empty"><p>📊 Apply regulation to see expression changes</p></div>
+                </div>
+                <!-- Fortune Tab -->
+                <div class="genome-panel" id="genome-fortune-panel">
+                    <div id="genome-fortune-result"></div>
+                    <div id="genome-fortune-empty" class="genome-empty"><p>🔮 Run regulation to unlock your genomic fortune</p></div>
+                </div>
+                <button id="genome-back-btn" class="secondary-btn">Return</button>
             </div>
         </section>
 
@@ -309,6 +359,7 @@
     <script src="engines/palm-analysis.js"></script>
     <script src="engines/couple-match.js"></script>
     <script src="engines/unified-oracle.js"></script>
+    <script src="engines/genome-engine.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

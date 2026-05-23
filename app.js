@@ -2,12 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const screens = {
         hero: document.getElementById('hero-section'),
         input: document.getElementById('input-section'),
+        genomeLab: document.getElementById('genome-lab-section'),
         coupleInput: document.getElementById('couple-input-section'),
         sequencing: document.getElementById('sequencing-section'),
         result: document.getElementById('result-section'),
         coupleResult: document.getElementById('couple-result-section'),
         fortuneStick: document.getElementById('fortune-stick-section')
     };
+
+    // Genome Lab state
+    let genomeScanResult = null;
+    let genomeRegResult = null;
 
     // Unified Oracle instance
     const oracle = new UnifiedOracle();
@@ -25,6 +30,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('couple-btn').addEventListener('click', () => {
         switchScreen('hero', 'coupleInput');
+    });
+
+    document.getElementById('genome-btn').addEventListener('click', () => {
+        switchScreen('hero', 'genomeLab');
+    });
+
+    document.getElementById('genome-back-btn').addEventListener('click', () => {
+        switchScreen('genomeLab', 'hero');
+    });
+
+    // Genome Lab Tabs
+    document.querySelectorAll('.genome-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.genome-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.genome-panel').forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(`genome-${tab.dataset.tab}-panel`).classList.add('active');
+        });
+    });
+
+    // Genome Sequence Input
+    const genomeSeqInput = document.getElementById('genome-sequence');
+    genomeSeqInput.addEventListener('input', () => {
+        const seq = genomeSeqInput.value.replace(/\s/g, '').toUpperCase();
+        document.getElementById('genome-bp-count').textContent = `${seq.length} bp`;
+        const gc = seq.length > 0 ? ((seq.split('').filter(b => b === 'G' || b === 'C').length / seq.length) * 100).toFixed(1) : '0.0';
+        document.getElementById('genome-gc-content').textContent = `GC: ${gc}%`;
+    });
+
+    // Genome Example Sequences
+    const genomeExamples = {
+        pigment: 'ATGGCTGTCTCCCACTTCTGGCTTCATCTGTATAAAGTTACATAACTTACGGTCATGTGATGGACTACAAAGACGATGACGACAAGCTGATCATGCCCGGGCAGCAGCGGCAGGCGAGCAGC',
+        silk: 'ATGGCTACTGGTTCTGGTACTGGCTCTGGTGCTGGTTATAAAATGGCAAATGCAAATGCTGCAAATGCTGCTGCTGGTTACATAACTTACGGT',
+        stress: 'ATGGCCGCGATGAAGGAGGTGATCGAAGAGCTTTGATCTATAAAGTTACATAACTTACGGT',
+        full: 'GTTACATAACTTACGGTCATGTGCTTTGATGCTTTGATATGAGTAAAGGAGAAGAACTTTTCACTGGATCCCTATCAGTGATAGAGATGACCATGATTACGAATTCACTGGCCGTCGTTTAATTGTGAGCGGATAACAATTATGGCTGTCTCCCACTTCTGGCTTCATCTGATGCCCGGGCAGCAGCGGCAGGCGAGCAGCTATAAAGTTACATAACTTACGGT'
+    };
+    document.querySelectorAll('.genome-example-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            genomeSeqInput.value = genomeExamples[btn.dataset.example] || '';
+            genomeSeqInput.dispatchEvent(new Event('input'));
+        });
+    });
+
+    // Genome Scan Button
+    document.getElementById('genome-scan-btn').addEventListener('click', () => {
+        const seq = genomeSeqInput.value;
+        if (!seq.trim()) return;
+        genomeScanResult = GENOME_ENGINE.scanSequence(seq);
+        genomeRegResult = GENOME_ENGINE.computeRegulation(genomeScanResult.elements);
+        renderGenomeScan(genomeScanResult);
+        renderGenomeRegulation(genomeRegResult);
+        renderGenomeFortune(genomeRegResult);
+        // Switch to scan tab
+        document.querySelectorAll('.genome-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.genome-panel').forEach(p => p.classList.remove('active'));
+        document.querySelector('.genome-tab[data-tab="scan"]').classList.add('active');
+        document.getElementById('genome-scan-panel').classList.add('active');
     });
 
     document.getElementById('couple-back-btn').addEventListener('click', () => {
@@ -535,6 +597,101 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (currentLine) lines.push(currentLine);
         return lines;
+    }
+
+    // ===== GENOME LAB RENDER FUNCTIONS =====
+    function renderGenomeScan(result) {
+        document.getElementById('genome-scan-empty').classList.add('hidden');
+        const geneMatchesEl = document.getElementById('genome-gene-matches');
+        const elementMatchesEl = document.getElementById('genome-element-matches');
+
+        geneMatchesEl.innerHTML = '<h3>Gene Matches (' + result.genes.length + ')</h3>' +
+            (result.genes.length === 0 ? '<p class="genome-empty-text">No gene motifs detected.</p>' :
+            result.genes.map(m => `<div class="genome-match-card">
+                <span class="genome-match-badge ${m.matchType}">${m.matchType} ${(m.similarity * 100).toFixed(0)}%</span>
+                <span class="genome-match-name">${m.geneName}</span>
+                <span class="genome-match-pos">Pos: ${m.position}</span>
+            </div>`).join(''));
+
+        elementMatchesEl.innerHTML = result.elements.length > 0 ?
+            '<h3 style="margin-top:1rem">Regulatory Elements (' + result.elements.length + ')</h3>' +
+            result.elements.map(e => `<div class="genome-element-card">
+                <span class="genome-element-type ${e.elementType}">${e.elementType}</span>
+                <span class="genome-element-name">${e.elementName}</span>
+                <span class="genome-element-effect">${e.effect > 0 ? '+' : ''}${e.effect}</span>
+            </div>`).join('') : '';
+    }
+
+    function renderGenomeRegulation(result) {
+        document.getElementById('genome-regulation-empty').classList.add('hidden');
+        const container = document.getElementById('genome-regulation-results');
+        const cards = result.profiles.map(p => {
+            const regColor = p.regulation === 'up' ? '#22c55e' : p.regulation === 'down' ? '#ef4444' : p.regulation === 'silenced' ? '#374151' : '#6b7280';
+            const regLabel = p.regulation === 'up' ? '▲ UP' : p.regulation === 'down' ? '▼ DOWN' : p.regulation === 'silenced' ? '✕ SILENCED' : '— NEUTRAL';
+            return `<div class="genome-reg-card">
+                <div class="genome-reg-header">
+                    <span class="genome-reg-name">${p.name}</span>
+                    <span class="genome-reg-symbol">${p.symbol}</span>
+                    <span class="genome-reg-badge" style="background:${regColor}">${regLabel}</span>
+                    <span class="genome-reg-fc">FC: ${p.foldChange.toFixed(2)}x</span>
+                </div>
+                <div class="genome-reg-bars">
+                    <div class="genome-reg-bar-group">
+                        <span class="genome-reg-bar-label">Baseline</span>
+                        <div class="genome-reg-bar-track"><div class="genome-reg-bar-fill" style="width:${p.baseline}%;background:#6b7280"></div></div>
+                        <span class="genome-reg-bar-value">${p.baseline}%</span>
+                    </div>
+                    <span class="genome-reg-arrow">→</span>
+                    <div class="genome-reg-bar-group">
+                        <span class="genome-reg-bar-label">Current</span>
+                        <div class="genome-reg-bar-track"><div class="genome-reg-bar-fill" style="width:${p.current}%;background:${regColor}"></div></div>
+                        <span class="genome-reg-bar-value">${p.current.toFixed(0)}%</span>
+                    </div>
+                </div>
+                ${p.activeRegulators.length > 0 ? `<div class="genome-reg-regulators">Regulated by: ${p.activeRegulators.join(', ')}</div>` : ''}
+            </div>`;
+        }).join('');
+
+        const overall = result.overallExpression;
+        const upCount = result.profiles.filter(p => p.regulation === 'up').length;
+        const downCount = result.profiles.filter(p => p.regulation === 'down').length;
+        const silencedCount = result.profiles.filter(p => p.regulation === 'silenced').length;
+
+        container.innerHTML = `<div class="genome-summary">
+            <div class="genome-summary-stat"><span class="genome-summary-value" style="color:${overall > 60 ? '#22c55e' : overall > 40 ? '#eab308' : '#6b7280'}">${overall.toFixed(0)}%</span><span class="genome-summary-label">Overall Expression</span></div>
+            <div class="genome-summary-stat"><span class="genome-summary-value" style="color:#22c55e">${upCount}</span><span class="genome-summary-label">Up-regulated</span></div>
+            <div class="genome-summary-stat"><span class="genome-summary-value" style="color:#ef4444">${downCount}</span><span class="genome-summary-label">Down-regulated</span></div>
+            <div class="genome-summary-stat"><span class="genome-summary-value" style="color:#374151">${silencedCount}</span><span class="genome-summary-label">Silenced</span></div>
+        </div>${cards}`;
+    }
+
+    function renderGenomeFortune(result) {
+        document.getElementById('genome-fortune-empty').classList.add('hidden');
+        const container = document.getElementById('genome-fortune-result');
+        const pb = result.patternBias;
+        container.innerHTML = `<div class="genome-fortune-card">
+            <h3>🔮 Genomic Fortune</h3>
+            <p class="genome-fortune-text">${result.fortune}</p>
+        </div>
+        <div class="genome-phenotype-card">
+            <h3>🧬 Phenotype Readout</h3>
+            <p>${result.phenotypeDescription}</p>
+        </div>
+        <div class="genome-pattern-card">
+            <h3>🎯 Pattern Bias</h3>
+            <div class="genome-pattern-grid">
+                <div><span class="genome-pattern-label">Favored Patterns</span>
+                    ${pb.favoredPatterns.map(p => `<div class="genome-pattern-item">${p.replace(/_/g, ' ')}</div>`).join('')}
+                </div>
+                <div><span class="genome-pattern-label">Complexity</span>
+                    <div class="genome-complexity-badge ${pb.complexity}">${pb.complexity.toUpperCase()}</div>
+                </div>
+                <div><span class="genome-pattern-label">Density</span>
+                    <div class="genome-density-bar"><div class="genome-density-fill" style="width:${pb.density * 100}%;background:${pb.dominantHue}"></div></div>
+                    <span>${(pb.density * 100).toFixed(0)}%</span>
+                </div>
+            </div>
+        </div>`;
     }
 
     // ===== Canvas DNA Animation =====

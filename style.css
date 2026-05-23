@@ -795,3 +795,159 @@ input:focus {
         font-size: 0.65rem;
     }
 }
+
+/* ===== GENOME LAB ===== */
+.genome-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 1.5rem;
+    background: var(--glass-bg);
+    border-radius: 8px;
+    padding: 4px;
+    border: 1px solid var(--glass-border);
+}
+
+.genome-tab {
+    flex: 1;
+    padding: 0.5rem 0.5rem;
+    background: transparent;
+    border: none;
+    color: #888;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.genome-tab:hover { color: var(--text-color); background: rgba(255,255,255,0.05); }
+.genome-tab.active { background: var(--accent-cyan); color: #000; }
+
+.genome-panel { display: none; }
+.genome-panel.active { display: block; }
+
+#genome-sequence {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--accent-cyan);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    resize: vertical;
+    margin-bottom: 0.5rem;
+}
+
+#genome-sequence::placeholder { color: #555; }
+
+.genome-input-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 1rem;
+    font-family: 'Space Mono', monospace;
+}
+
+.genome-examples {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.genome-example-btn {
+    padding: 0.3rem 0.75rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.genome-example-btn:hover { background: rgba(255,255,255,0.1); }
+
+.genome-match-card, .genome-element-card, .genome-reg-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.genome-match-badge { padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-family: 'Space Mono', monospace; }
+.genome-match-badge.exact { background: rgba(34,197,94,0.2); color: #22c55e; }
+.genome-match-badge.near-exact { background: rgba(234,179,8,0.2); color: #eab308; }
+.genome-match-badge.partial { background: rgba(249,115,22,0.2); color: #f97316; }
+.genome-match-name { font-weight: 600; flex: 1; text-align: left; }
+.genome-match-pos { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: #888; }
+
+.genome-element-type { padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-family: 'Space Mono', monospace; }
+.genome-element-type.promoter { background: rgba(0,243,255,0.2); color: #00f3ff; }
+.genome-element-type.enhancer { background: rgba(34,197,94,0.2); color: #22c55e; }
+.genome-element-type.silencer { background: rgba(239,68,68,0.2); color: #ef4444; }
+.genome-element-name { font-weight: 600; flex: 1; text-align: left; }
+.genome-element-effect { font-family: 'Space Mono', monospace; font-size: 0.8rem; }
+
+.genome-reg-header { display: flex; align-items: center; gap: 6px; margin-bottom: 0.5rem; flex-wrap: wrap; }
+.genome-reg-name { font-weight: 600; }
+.genome-reg-symbol { font-family: 'Space Mono', monospace; color: #888; font-size: 0.8rem; }
+.genome-reg-badge { padding: 2px 6px; border-radius: 4px; color: #fff; font-size: 0.65rem; }
+.genome-reg-fc { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: #888; margin-left: auto; }
+
+.genome-reg-bars { display: flex; align-items: center; gap: 8px; }
+.genome-reg-bar-group { display: flex; align-items: center; gap: 4px; flex: 1; }
+.genome-reg-bar-label { font-size: 0.7rem; color: #888; white-space: nowrap; }
+.genome-reg-bar-track { flex: 1; height: 12px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; }
+.genome-reg-bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s; }
+.genome-reg-bar-value { font-size: 0.7rem; font-family: 'Space Mono', monospace; color: #aaa; min-width: 30px; text-align: right; }
+.genome-reg-arrow { color: #888; font-size: 0.8rem; }
+.genome-reg-regulators { font-size: 0.75rem; color: #888; margin-top: 0.5rem; }
+
+.genome-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1rem; }
+.genome-summary-stat { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.75rem; text-align: center; }
+.genome-summary-value { font-size: 1.25rem; font-weight: 700; display: block; }
+.genome-summary-label { font-size: 0.65rem; color: #888; display: block; margin-top: 2px; }
+
+.genome-empty { text-align: center; padding: 2rem; color: #888; }
+.genome-empty p { font-size: 0.9rem; }
+
+.genome-fortune-card, .genome-phenotype-card, .genome-pattern-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.genome-fortune-card h3, .genome-phenotype-card h3, .genome-pattern-card h3 { margin-bottom: 0.5rem; }
+.genome-fortune-text { font-size: 0.95rem; line-height: 1.6; color: rgba(255,255,255,0.9); }
+
+.genome-pattern-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 0.5rem; }
+.genome-pattern-label { font-size: 0.75rem; color: #888; display: block; margin-bottom: 0.5rem; }
+.genome-pattern-item { font-size: 0.8rem; padding: 4px 0; border-bottom: 1px solid var(--glass-border); }
+
+.genome-complexity-badge { padding: 4px 12px; border-radius: 6px; font-family: 'Space Mono', monospace; font-size: 0.8rem; display: inline-block; }
+.genome-complexity-badge.complex { background: rgba(168,85,247,0.2); color: #a855f7; }
+.genome-complexity-badge.moderate { background: rgba(234,179,8,0.2); color: #eab308; }
+.genome-complexity-badge.simple { background: rgba(107,114,128,0.2); color: #6b7280; }
+
+.genome-density-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; margin-top: 4px; }
+.genome-density-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+
+@media (max-width: 600px) {
+    .genome-summary { grid-template-columns: repeat(2, 1fr); }
+    .genome-pattern-grid { grid-template-columns: 1fr; }
+    .genome-tabs { overflow-x: auto; }
+    .genome-tab { font-size: 0.7rem; padding: 0.4rem 0.3rem; }
+}
