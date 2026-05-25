@@ -17,8 +17,22 @@ describe('hashString', () => {
         expect(hashString('Alice')).not.toBe(hashString('Bob'));
     });
 
-    test('handles unicode characters', () => {
+    test('does not throw for unicode input and is self-consistent', () => {
         expect(() => hashString('日本語')).not.toThrow();
         expect(hashString('日本語')).toBe(hashString('日本語'));
+    });
+});
+
+describe('hashString pinned values (regression guard)', () => {
+    test('hashes "Alice" to the expected 32-bit integer', () => {
+        expect(hashString('Alice')).toBe(63350368);
+    });
+
+    test('hashes "Bob" to the expected 32-bit integer', () => {
+        expect(hashString('Bob')).toBe(66965);
+    });
+
+    test('hashes unicode "日本語" to the expected 32-bit integer', () => {
+        expect(hashString('日本語')).toBe(25921943);
     });
 });
