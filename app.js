@@ -737,4 +737,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof Atlas !== 'undefined') {
         Atlas.register(renderResults);
     }
+
+    // Prefill input form from URL state if present.
+    const urlReading = decodeReading(window.location.search);
+    if (urlReading) {
+        document.getElementById('subject-name').value = urlReading.name;
+        document.getElementById('birth-date').value = urlReading.date;
+        if (urlReading.time) document.getElementById('birth-time').value = urlReading.time;
+        // Reveal the input section so the user sees the prefilled data.
+        switchScreen('hero', 'input');
+    }
 });
