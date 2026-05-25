@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function finalizeResult(name, date, time, palmImageData) {
         const result = oracle.analyze(name, date, time, palmImageData);
-        renderResults(result);
+        Atlas.mount(result);
         switchScreen('sequencing', 'result');
     }
 
@@ -732,4 +732,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function stopDNAAnimation() { cancelAnimationFrame(animationId); }
+
+    // Register the legacy renderer with the Atlas. Phase 2 replaces this.
+    if (typeof Atlas !== 'undefined') {
+        Atlas.register(renderResults);
+    }
 });
