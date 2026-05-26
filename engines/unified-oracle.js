@@ -63,15 +63,12 @@ class UnifiedOracle {
     }
 
     /**
-     * Generate a pseudo-random DNA sequence
+     * Generate a deterministic DNA sequence from a per-user seed.
+     * Seed is set by analyze(); falls back to a time-based seed if called early.
      */
     generateSequence(length = 24) {
-        const bases = ['A', 'T', 'C', 'G'];
-        let seq = '';
-        for (let i = 0; i < length; i++) {
-            seq += bases[Math.floor(Math.random() * 4)];
-        }
-        return seq;
+        const seed = this._seedString || String(Date.now());
+        return generateDNA(seed, length);
     }
 
     /**
@@ -131,6 +128,7 @@ class UnifiedOracle {
      * @param {ImageData|null} palmImageData - Palm image pixel data
      */
     analyze(name, birthDate, birthTime, palmImageData) {
+        this._seedString = `${name}|${birthDate}|${birthTime || ''}`;
         const result = {};
 
         // DNA sequence
@@ -166,19 +164,6 @@ class UnifiedOracle {
 
         return result;
     }
-}
-
-/**
- * Simple string hash for deterministic results
- */
-function hashString(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash |= 0;
-    }
-    return hash;
 }
 
 if (typeof module !== 'undefined' && module.exports) { module.exports = UnifiedOracle; }
