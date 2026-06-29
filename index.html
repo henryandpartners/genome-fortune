@@ -61,6 +61,7 @@
                     <button class="genome-tab" data-tab="scan">🔍 Scan</button>
                     <button class="genome-tab" data-tab="regulation">📊 Regulation</button>
                     <button class="genome-tab" data-tab="fortune">🔮 Fortune</button>
+                    <button class="genome-tab" data-tab="yantra">🛡️ Yantra</button>
                 </div>
                 <!-- Input Tab -->
                 <div class="genome-panel active" id="genome-input-panel">
@@ -76,7 +77,11 @@ Example: ATGGCTGTCTCCCACTTCTGGCTTCATCTG" rows="6"></textarea>
                         <button class="genome-example-btn" data-example="pigment">🎨 Pigment</button>
                         <button class="genome-example-btn" data-example="silk">🧵 Silk</button>
                         <button class="genome-example-btn" data-example="stress">🔥 Stress</button>
-                        <button class="genome-example-btn" data-example="full">🧬 Full</button>
+                        <button class="genome-example-btn" data-example="immune">🛡️ Immune</button>
+                        <button class="genome-example-btn" data-example="neural">🧠 Neural</button>
+                        <button class="genome-example-btn" data-example="longevity">⏳ Longevity</button>
+                        <button class="genome-example-btn" data-example="full">🧬 Core</button>
+                        <button class="genome-example-btn" data-example="mega">💫 Mega</button>
                     </div>
                     <button id="genome-scan-btn" class="primary-btn">🔍 Scan for Genes & Regulation</button>
                 </div>
@@ -95,6 +100,15 @@ Example: ATGGCTGTCTCCCACTTCTGGCTTCATCTG" rows="6"></textarea>
                 <div class="genome-panel" id="genome-fortune-panel">
                     <div id="genome-fortune-result"></div>
                     <div id="genome-fortune-empty" class="genome-empty"><p>🔮 Run regulation to unlock your genomic fortune</p></div>
+                </div>
+                <!-- Yantra Tab -->
+                <div class="genome-panel" id="genome-yantra-panel">
+                    <div id="genome-yantra-result">
+                        <canvas id="yantra-canvas" width="540" height="960"></canvas>
+                        <button id="yantra-download-btn" class="primary-btn">📥 Download Yantra Wallpaper</button>
+                        <p class="genome-yantra-hint">1080×1920 — perfect for phone background</p>
+                    </div>
+                    <div id="genome-yantra-empty" class="genome-empty"><p>🛡️ Scan a sequence to generate your protective genomic yantra</p></div>
                 </div>
                 <button id="genome-back-btn" class="secondary-btn">Return</button>
             </div>
@@ -360,6 +374,7 @@ Example: ATGGCTGTCTCCCACTTCTGGCTTCATCTG" rows="6"></textarea>
     <script src="engines/couple-match.js"></script>
     <script src="engines/unified-oracle.js"></script>
     <script src="engines/genome-engine.js"></script>
+    <script src="engines/yantra-engine.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Genome Lab state
     let genomeScanResult = null;
     let genomeRegResult = null;
+    let lastGenomeSequence = '';
 
     // Unified Oracle instance
     const oracle = new UnifiedOracle();
@@ -64,7 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
         pigment: 'ATGGCTGTCTCCCACTTCTGGCTTCATCTGTATAAAGTTACATAACTTACGGTCATGTGATGGACTACAAAGACGATGACGACAAGCTGATCATGCCCGGGCAGCAGCGGCAGGCGAGCAGC',
         silk: 'ATGGCTACTGGTTCTGGTACTGGCTCTGGTGCTGGTTATAAAATGGCAAATGCAAATGCTGCAAATGCTGCTGCTGGTTACATAACTTACGGT',
         stress: 'ATGGCCGCGATGAAGGAGGTGATCGAAGAGCTTTGATCTATAAAGTTACATAACTTACGGT',
-        full: 'GTTACATAACTTACGGTCATGTGCTTTGATGCTTTGATATGAGTAAAGGAGAAGAACTTTTCACTGGATCCCTATCAGTGATAGAGATGACCATGATTACGAATTCACTGGCCGTCGTTTAATTGTGAGCGGATAACAATTATGGCTGTCTCCCACTTCTGGCTTCATCTGATGCCCGGGCAGCAGCGGCAGGCGAGCAGCTATAAAGTTACATAACTTACGGT'
+        immune: 'ATGATGTCTGCCTCGCGCCTGGCTGTGCTGCTGGGGACTTTCCTATAAAGTTACATAACTTACGGTATGAACTCCTTCTCCACAAGCGCCTTCGGTCCATGCTGGTCATGGCGCCCCGCACCCTCCTCCTG',
+        neural: 'ATGACCATCCTTTTCCTTACTATGGTTATTTCTGACGTCAATGGGCAACCGCAGCACGGTCTCTGACCTCCGATGCTGGAGATCGCCATGCTGCGCCTGCTGCTGATGGAGACGACGCCCTCCGAGGAGGTGGAGCCG',
+        longevity: 'ATGGCGGACGAGGCGGCCCTCGCCCTTCAGCCGATGGCAGAGGCGCCGGCGTCGCCGCTGTCGCCGATGCTGGGAACCGGCCTGGCCTGGCGCTGCGCG',
+        full: 'GTTACATAACTTACGGTCATGTGCTTTGATGCTTTGATATGAGTAAAGGAGAAGAACTTTTCACTGGATCCCTATCAGTGATAGAGATGACCATGATTACGAATTCACTGGCCGTCGTTTAATTGTGAGCGGATAACAATTATGGCTGTCTCCCACTTCTGGCTTCATCTGATGCCCGGGCAGCAGCGGCAGGCGAGCAGCTATAAAGTTACATAACTTACGGTGGGACTTTCCTGACGTCAATGGCGGACGAGGCGGCCCTCGCCCTTCAGCCG',
+        mega: 'GTTACATAACTTACGGTCATGTGCTTTGATGCTTTGATATGAGTAAAGGAGAAGAACTTTTCACTGGATATAAAGTTACATAACTTACGGTGGGACTTTCCATGATGTCTGCCTCGCGCCTGGCTGTGCTGGGGACTTTCCTATGAACTCCTTCTCCACAAGCGCCTTCGGTCCATGCTGGTCATGGCGCCCCGCACCCTCCTCCTGATGAAATATACAAGTTATATCTTGGCTTTTCAGTGACGTCAATGACCATCCTTTTCCTTACTATGGTTATTTCTATGGGCAACCGCAGCACGGTCTCTGACCTCCGATGCTGGAGATCGCCATGCTGCGCCTGCTGCTGATGCTGGAGACGCCCTCCGAGGAGGTGGAGCCGATGGCGGACGAGGCGGCCCTCGCCCTTCAGCCGATGGCAGAGGCGCCGGCGTCGCCGCTGTCGCCGATGCTGGGAACCGGCCTGGCCTGGCGCTGCGCGATGGGTGAAACTCTGGGAGATTCTCCTATTGACATGGGGCAACCCGGGAACGGGAGCGCCCTTCTATGGCCGCGATGAAGGAGGTGATCGAAGAGATGCCTGAGGAAGTGCACCATGGGGAGGAGGAGATGGAGGAGCCGCAGTCAGATCCTAGCGTCGAATGGCTGTCTCCCACTTCTGGCTTCATCTGATGCCCGGGCAGCAGCGGCAGGCGAGCAGCTATAAAGTTACATAACTTACGGT'
     };
     document.querySelectorAll('.genome-example-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -77,11 +82,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('genome-scan-btn').addEventListener('click', () => {
         const seq = genomeSeqInput.value;
         if (!seq.trim()) return;
+        lastGenomeSequence = seq;
         genomeScanResult = GENOME_ENGINE.scanSequence(seq);
         genomeRegResult = GENOME_ENGINE.computeRegulation(genomeScanResult.elements);
         renderGenomeScan(genomeScanResult);
         renderGenomeRegulation(genomeRegResult);
         renderGenomeFortune(genomeRegResult);
+        renderGenomeYantra(genomeRegResult, seq);
         // Switch to scan tab
         document.querySelectorAll('.genome-tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.genome-panel').forEach(p => p.classList.remove('active'));
@@ -693,6 +700,25 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>`;
     }
+
+    // ===== YANTRA RENDER =====
+    function renderGenomeYantra(result, sequence) {
+        document.getElementById('genome-yantra-empty').classList.add('hidden');
+        document.getElementById('genome-yantra-result').style.display = 'block';
+        const canvas = document.getElementById('yantra-canvas');
+        YANTRA_ENGINE.generateYantra(canvas, result, sequence);
+    }
+
+    document.getElementById('yantra-download-btn').addEventListener('click', () => {
+        const canvas = document.getElementById('yantra-canvas');
+        const canvasHD = document.createElement('canvas');
+        canvasHD.width = 1080;
+        canvasHD.height = 1920;
+        // Redraw at full resolution
+        YANTRA_ENGINE.generateYantra(canvasHD, genomeRegResult, lastGenomeSequence);
+        const subjectName = document.getElementById('subject-name').value || 'genome';
+        YANTRA_ENGINE.downloadYantra(canvasHD, `yantra-${subjectName.replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.png`);
+    });
 
     // ===== Canvas DNA Animation =====
     let animationId;

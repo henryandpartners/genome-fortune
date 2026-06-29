@@ -945,6 +945,37 @@ input:focus {
 .genome-density-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; margin-top: 4px; }
 .genome-density-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
 
+/* Yantra Panel */
+#genome-yantra-result { display: flex; flex-direction: column; align-items: center; padding: 1rem; }
+#yantra-canvas {
+    width: 270px;
+    height: 480px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.5), 0 0 20px rgba(189,0,255,0.1);
+}
+#yantra-download-btn {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, rgba(189,0,255,0.3), rgba(0,243,255,0.3));
+    border: 1px solid rgba(189,0,255,0.4);
+    color: #fff;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Space Mono', monospace;
+}
+#yantra-download-btn:hover {
+    background: linear-gradient(135deg, rgba(189,0,255,0.5), rgba(0,243,255,0.5));
+    box-shadow: 0 0 20px rgba(189,0,255,0.3);
+}
+.genome-yantra-hint {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 0.5rem;
+}
+
 @media (max-width: 600px) {
     .genome-summary { grid-template-columns: repeat(2, 1fr); }
     .genome-pattern-grid { grid-template-columns: 1fr; }
