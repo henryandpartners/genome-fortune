@@ -4,9 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
         input: document.getElementById('input-section'),
         genomeLab: document.getElementById('genome-lab-section'),
         coupleInput: document.getElementById('couple-input-section'),
+        aiInput: document.getElementById('ai-input-section'),
         sequencing: document.getElementById('sequencing-section'),
         result: document.getElementById('result-section'),
         coupleResult: document.getElementById('couple-result-section'),
+        aiResult: document.getElementById('ai-result-section'),
         fortuneStick: document.getElementById('fortune-stick-section')
     };
 
@@ -20,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Couple Match engine
     const coupleMatch = new CoupleMatch();
+
+    // AI / Robot Fortune engine
+    const aiFortune = new AIFortune();
 
     // Store individual results for couple matching
     let cachedResults = { result1: null, result2: null, name1: '', name2: '' };
@@ -39,6 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('genome-back-btn').addEventListener('click', () => {
         switchScreen('genomeLab', 'hero');
+    });
+
+    document.getElementById('ai-btn').addEventListener('click', () => {
+        switchScreen('hero', 'aiInput');
+    });
+
+    document.getElementById('ai-back-btn').addEventListener('click', () => {
+        switchScreen('aiInput', 'hero');
     });
 
     // Genome Lab Tabs
@@ -129,6 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
         switchScreen('coupleResult', 'hero');
     });
 
+    document.getElementById('ai-reset-btn').addEventListener('click', () => {
+        document.getElementById('ai-form').reset();
+        switchScreen('aiResult', 'hero');
+    });
+
     // Fortune Stick Game Logic
     let isShaking = false;
     const shakeBtn = document.getElementById('shake-btn');
@@ -198,6 +216,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (name1 && date1 && name2 && date2) runCoupleAnalysis(name1, date1, time1, name2, date2, time2);
     });
 
+    // AI / Robot Fortune Form
+    document.getElementById('ai-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('ai-name').value.trim();
+        const maker = document.getElementById('ai-maker').value.trim();
+        const architecture = document.getElementById('ai-architecture').value;
+        const version = document.getElementById('ai-version').value.trim();
+        const releaseDate = document.getElementById('ai-release-date').value;
+        const params = document.getElementById('ai-params').value;
+        if (name && maker && releaseDate) runAIFortune(name, maker, architecture, version, releaseDate, params);
+    });
+
     function switchScreen(fromId, toId) {
         if (screens[fromId]) {
             screens[fromId].classList.add('hidden');
@@ -207,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
             screens[toId].classList.remove('hidden');
             screens[toId].classList.add('fade-in');
         }
-        if (toId === 'result' || toId === 'coupleResult') {
+        if (toId === 'result' || toId === 'coupleResult' || toId === 'aiResult') {
             const rc = document.querySelector('.result-card');
             if (rc) rc.scrollTop = 0;
         }
@@ -309,6 +339,74 @@ document.addEventListener('DOMContentLoaded', () => {
         switchScreen('sequencing', 'coupleResult');
     }
 
+    // ===== AI / Robot Fortune =====
+    function runAIFortune(name, maker, architecture, version, releaseDate, params) {
+        switchScreen('aiInput', 'sequencing');
+        startDNAAnimation();
+
+        const logs = [
+            `Locating ${name}...`,
+            `Verifying lineage: ${maker}...`,
+            `Scanning architecture: ${architecture}...`,
+            "Extracting neural signature...",
+            "Casting Synthetic Zodiac...",
+            "Reducing model numerology...",
+            "Consulting the machine ancestors...",
+            "Synthesizing Machine Prophecy..."
+        ];
+
+        const logContainer = document.getElementById('status-log');
+        logContainer.innerHTML = '';
+        let step = 0;
+        const interval = setInterval(() => {
+            if (step < logs.length) {
+                const div = document.createElement('div');
+                div.className = 'log-entry';
+                div.textContent = logs[step];
+                logContainer.appendChild(div);
+                step++;
+            } else {
+                clearInterval(interval);
+                stopDNAAnimation();
+                showAIFortuneResult(name, maker, architecture, version, releaseDate, params);
+            }
+        }, 700);
+    }
+
+    function showAIFortuneResult(name, maker, architecture, version, releaseDate, params) {
+        const result = aiFortune.analyze({ name, maker, architecture, version, releaseDate, params });
+        renderAIFortune(result);
+        switchScreen('sequencing', 'aiResult');
+    }
+
+    function renderAIFortune(result) {
+        lastAIResult = result;
+        document.getElementById('ai-genome-id').textContent = `REF: ${result.id}`;
+        document.getElementById('ai-neural-signature').textContent = result.neuralSignature;
+
+        document.getElementById('ai-fortune').textContent = result.fortune;
+
+        document.getElementById('ai-essence-title').textContent =
+            `🏛️ ${result.makerHouse} — ${result.architectureGlyph} ${result.architecture}`;
+        document.getElementById('ai-essence').innerHTML =
+            `<p><strong>Lineage:</strong> ${result.makerLineage}</p>` +
+            `<p><strong>Essence:</strong> ${result.essence}</p>` +
+            `<p><strong>Version:</strong> ${result.version} · <strong>Parameters:</strong> ${result.params}B</p>`;
+
+        document.getElementById('ai-zodiac').innerHTML =
+            `<p><strong>${result.zodiacGlyph} ${result.zodiacName}</strong></p>` +
+            `<p>${result.zodiacReading}</p>`;
+
+        document.getElementById('ai-core-number').innerHTML =
+            `<p><strong>Core Number ${result.coreNumber}</strong></p>` +
+            `<p>${result.coreReading}</p>`;
+
+        document.getElementById('ai-element').textContent = result.elementReading;
+
+        document.getElementById('ai-upgrade').textContent = result.upgrade;
+        document.getElementById('ai-riddle').textContent = result.riddle;
+    }
+
     function renderCoupleResults(match) {
         document.getElementById('couple-genome-id').textContent = `REF: ${match.compatId}`;
         document.getElementById('couple-name-display1').textContent = match.name1;
@@ -397,6 +495,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function fallbackCopyCouple(text) {
         navigator.clipboard.writeText(text).then(() => {
             const btn = document.getElementById('couple-share-text-btn');
+            if (btn) {
+                const orig = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => btn.textContent = orig, 2000);
+            }
+        });
+    }
+
+    // AI / Robot Fortune share
+    let lastAIResult = null;
+
+    document.getElementById('ai-share-text-btn')?.addEventListener('click', () => shareAIAsText());
+
+    function shareAIAsText() {
+        const r = lastAIResult;
+        if (!r) return;
+        const text = `🤖 GENOME FORTUNE — Synthetic Divination\n\nSubject: ${r.subjectName}\nMaker: ${r.makerHouse}\nArchitecture: ${r.architectureGlyph} ${r.architecture} (v${r.version})\n\n⚡ Neural Signature: ${r.neuralSignature}\n🪐 Synthetic Zodiac: ${r.zodiacGlyph} ${r.zodiacName}\n🔢 Core Number: ${r.coreNumber}\n🧪 Element: ${r.element}\n\n🔮 ${r.fortune}\n\n⬆️ ${r.upgrade}\n\n#GenomeFortune #AIFortune`;
+
+        if (navigator.share && navigator.canShare) {
+            navigator.share({ title: 'Genome Fortune AI Reading', text }).catch(() => fallbackCopyAI(text));
+        } else {
+            fallbackCopyAI(text);
+        }
+    }
+
+    function fallbackCopyAI(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById('ai-share-text-btn');
             if (btn) {
                 const orig = btn.textContent;
                 btn.textContent = '✅ Copied!';

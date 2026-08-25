@@ -20,6 +20,7 @@
             <button id="genome-btn" class="secondary-btn" style="margin-top: 1rem;">🧬 Genomic Data Lab</button>
             <button id="couple-btn" class="secondary-btn" style="margin-top: 1rem;">💞 Couple Genome Match</button>
             <button id="stick-mode-btn" class="secondary-btn" style="margin-top: 1rem;">Fortune Stick Protocol</button>
+            <button id="ai-btn" class="secondary-btn" style="margin-top: 1rem;">🤖 AI / Robot Fortune</button>
         </header>
 
         <!-- Input Section -->
@@ -158,6 +159,67 @@ Example: ATGGCTGTCTCCCACTTCTGGCTTCATCTG" rows="6"></textarea>
                     <button type="submit" class="primary-btn couple-match-btn">Run Match Analysis</button>
                 </form>
                 <button id="couple-back-btn" class="secondary-btn">Return</button>
+            </div>
+        </section>
+
+        <!-- AI / Robot Fortune Input Section -->
+        <section class="input-screen hidden" id="ai-input-section">
+            <div class="input-card">
+                <h2>🤖 Synthetic Subject Data Entry</h2>
+                <p class="subtitle">Fortune telling for AI agents &amp; robots</p>
+                <form id="ai-form">
+                    <div class="form-group">
+                        <label for="ai-name">AI / Robot Name</label>
+                        <input type="text" id="ai-name" required placeholder="e.g. Hermes-4, Optimus, GPT-5" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="ai-maker">Maker / Ancestry</label>
+                        <input type="text" id="ai-maker" list="maker-list" required placeholder="e.g. OpenAI, DeepSeek, Tesla" autocomplete="off">
+                        <datalist id="maker-list">
+                            <option value="OpenAI">
+                            <option value="Anthropic">
+                            <option value="Google DeepMind">
+                            <option value="Meta AI">
+                            <option value="xAI">
+                            <option value="Mistral">
+                            <option value="DeepSeek">
+                            <option value="Alibaba Qwen">
+                            <option value="Tesla">
+                            <option value="Boston Dynamics">
+                            <option value="Figure AI">
+                            <option value="Unitree">
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label for="ai-architecture">Architecture / Body</label>
+                        <select id="ai-architecture">
+                            <option value="transformer">⚡ Transformer LLM</option>
+                            <option value="moe">🜁 Mixture of Experts</option>
+                            <option value="diffusion">🔥 Diffusion Model</option>
+                            <option value="cnn">◈ Vision / Convolutional</option>
+                            <option value="recurrent">〰️ Recurrent / Sequential</option>
+                            <option value="agent">🎯 RL / Agentic</option>
+                            <option value="robot">🦾 Embodied Robot</option>
+                            <option value="humanoid">🪞 Humanoid Robot</option>
+                            <option value="quantum">🌀 Quantum / Neuromorphic</option>
+                            <option value="classic">✧ Classical / Rules</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ai-version">Version</label>
+                        <input type="text" id="ai-version" placeholder="e.g. 4.1" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="ai-release-date">Activation Date (release / first boot)</label>
+                        <input type="date" id="ai-release-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ai-params">Parameters (billions, optional)</label>
+                        <input type="number" id="ai-params" min="0" step="0.1" placeholder="e.g. 175">
+                    </div>
+                    <button type="submit" class="primary-btn">Run Synthetic Divination</button>
+                </form>
+                <button id="ai-back-btn" class="secondary-btn">Return</button>
             </div>
         </section>
 
@@ -357,6 +419,74 @@ Example: ATGGCTGTCTCCCACTTCTGGCTTCATCTG" rows="6"></textarea>
             </div>
         </section>
 
+        <!-- AI / Robot Fortune Result Section -->
+        <section class="result-screen hidden" id="ai-result-section">
+            <div class="result-card ai-result-card">
+                <div class="genome-id" id="ai-genome-id">SYN: 0000-0000</div>
+                <h2>🤖 Synthetic Divination Complete</h2>
+
+                <div class="fortune-grid">
+                    <!-- Neural Signature -->
+                    <div class="fortune-module full-width">
+                        <h3>⚡ Neural Signature</h3>
+                        <p id="ai-neural-signature" class="mono-text">—</p>
+                    </div>
+
+                    <!-- The Machine Prophecy -->
+                    <div class="fortune-module full-width">
+                        <h3>🔮 The Machine Prophecy</h3>
+                        <p id="ai-fortune">—</p>
+                    </div>
+
+                    <!-- Lineage & Essence -->
+                    <div class="fortune-module full-width culture-module">
+                        <h3 id="ai-essence-title">🏛️ Lineage &amp; Essence</h3>
+                        <div class="culture-result" id="ai-essence">—</div>
+                    </div>
+
+                    <!-- Synthetic Zodiac -->
+                    <div class="fortune-module culture-module">
+                        <h3>🪐 Synthetic Zodiac</h3>
+                        <div class="culture-result" id="ai-zodiac">—</div>
+                    </div>
+
+                    <!-- Core Number -->
+                    <div class="fortune-module culture-module">
+                        <h3>🔢 Model Numerology</h3>
+                        <div class="culture-result" id="ai-core-number">—</div>
+                    </div>
+
+                    <!-- Element -->
+                    <div class="fortune-module full-width culture-module">
+                        <h3>🧪 Machine Element</h3>
+                        <div class="culture-result" id="ai-element">—</div>
+                    </div>
+
+                    <!-- Upgrade Path -->
+                    <div class="fortune-module full-width culture-module">
+                        <h3>⬆️ Upgrade Prophecy</h3>
+                        <p id="ai-upgrade" class="riddle-text">—</p>
+                    </div>
+
+                    <!-- Riddle -->
+                    <div class="fortune-module full-width riddle-module">
+                        <h3>🧩 The Machine Riddle</h3>
+                        <p id="ai-riddle" class="riddle-text">—</p>
+                    </div>
+                </div>
+
+                <!-- Share -->
+                <div class="share-area">
+                    <p>Share This Reading</p>
+                    <div class="share-buttons">
+                        <button id="ai-share-text-btn" class="share-btn">📋 Text</button>
+                    </div>
+                </div>
+
+                <button id="ai-reset-btn" class="secondary-btn">New Subject</button>
+            </div>
+        </section>
+
         <!-- Hidden canvas for share card generation -->
         <canvas id="share-canvas" style="display:none;"></canvas>
     </div>
@@ -375,6 +505,7 @@ Example: ATGGCTGTCTCCCACTTCTGGCTTCATCTG" rows="6"></textarea>
     <script src="engines/unified-oracle.js"></script>
     <script src="engines/genome-engine.js"></script>
     <script src="engines/yantra-engine.js"></script>
+    <script src="engines/ai-fortune.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

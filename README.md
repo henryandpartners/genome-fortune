@@ -15,6 +15,7 @@ Decode Your Destiny — merging ancient cosmology with epigenetic algorithms.
 | Chinese Zodiac | Animal + Element + Yin/Yang |
 | Numerology | Pythagorean + Chaldean + Soul Urge |
 | Palm Analysis | Canvas-based palm line detection |
+| AI Fortune | Synthetic divination for AI agents & robots |
 
 ## Quick Start
 
